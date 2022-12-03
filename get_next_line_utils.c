@@ -6,11 +6,13 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:25:17 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/03 12:50:30 by mkaraden         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:43:46 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+#include <stdio.h>
 
 size_t	ft_strlen(char *str)
 {
@@ -72,6 +74,7 @@ int	check_newline(char *ptr)
 		return (0);
 	while (*ptr)
 	{
+		//printf("chechk : %d\n", (*ptr == '\n'));
 		if (*ptr == '\n')
 			return (1);
 		ptr++;

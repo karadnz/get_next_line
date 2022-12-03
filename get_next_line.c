@@ -6,41 +6,34 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:24:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/03 13:17:52 by mkaraden         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:43:25 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "get_next_line_utils.c"
+//#include "get_next_line_utils.c"
 
 
 #include <stdio.h>
 #include <fcntl.h>
 
-void	ft_putstr(char *str)
-{
-	int i = 0;
-	while (*str)
-	{
-		write(1,str,1);
-		str++;
-	}
-}
-
 char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char	*line;
+	line = 0;
 
 	
 	stash = ft_init_stash(fd, stash);
-	ft_putstr(stash);
+	//printf("init stash: %s$\n",stash);
 
 
-	line = ft_init_line(stash,line);
-	ft_putstr(line);
+	line = ft_init_line(line,stash);
+	//printf("%s$\n",line);
+	
 
-	ft_edit_stash(stash);
+	stash = ft_edit_stash(stash);
+	//printf("edited stash: %s$\n",stash);
 	
 
 
@@ -61,8 +54,10 @@ char	*ft_init_stash(int fd, char *stash)
 		
 		rd = read(fd, buffer, BUFFER_SIZE);
 		//ft_putstr(buffer);
+		buffer[rd] = '\0';
 		stash = ft_strjoin(stash, buffer);
 		//ft_putstr(stash);
+		//printf("loop stash: %s$\n",stash);
 	}
 	
 	return(stash);
@@ -76,8 +71,12 @@ char	*ft_init_line(char *line, char *stash)
 	{
 		i++;
 	}
+	if(stash[i] == '\n')
+	{
+		i++;
+	}
 
-	line = malloc(sizeof(char) * (i + 2)); // \n ve \0 icin
+	line = malloc(sizeof(char) * (i + 1)); // \n ve \0 icin (i + 2)
 
 	i = 0;
 	while(stash[i] && stash[i] != '\n')
@@ -88,14 +87,16 @@ char	*ft_init_line(char *line, char *stash)
 	if(stash[i] == '\n')
 	{
 		line[i] = '\n';
+		i++;
 	}
+
 	line[i] = '\0';
 	return(line);
 
 }
 
 
-void	ft_edit_stash(char *stash)
+char	*ft_edit_stash(char *stash)
 {
 	char *new_stash;
 	int stash_length;
@@ -107,26 +108,26 @@ void	ft_edit_stash(char *stash)
 	{
 		i++;
 	}
+	if (stash[i] == '\n')
+	{
+		i++;
+	}
 	new_stash = malloc((stash_length - i + 1) * sizeof(char));
 	
-	
+	int j = 0;
 	while(stash[i])
 	{
-		new_stash[i] = stash[i];
+		new_stash[j] = stash[i];
 		i++;
+		j++;
 	}
 	new_stash[i] = '\0';
-	i = 0;
-	while(new_stash[i] != '\0')
-	{
-		stash[i] = new_stash[i];
-		i++;
-	}
-	stash[i] = '\0';
+	
+	return(new_stash);
 }
 
 
-int main()
+/*int main()
 {
 
 
@@ -134,7 +135,8 @@ int main()
 
 	
 
-	printf("%s\n", get_next_line(fd));
+	printf("line: %s$\n", get_next_line(fd));
+	printf("line: %s$\n", get_next_line(fd));
 	
 
-}
+}*/

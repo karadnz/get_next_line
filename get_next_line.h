@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:25:13 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/03 13:16:18 by mkaraden         ###   ########.fr       */
+/*   Updated: 2022/12/03 14:18:39 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int		check_newline(char *ptr);
 
 char	*ft_init_stash(int fd, char *buffer);
 char	*ft_init_line(char *line, char *stash);
-void	ft_edit_stash(char *stash);
+char	*ft_edit_stash(char *stash);
 
 #endif
