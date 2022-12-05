@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/03 11:24:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/05 14:06:06 by mkaraden         ###   ########.fr       */
+/*   Created: 2022/12/05 14:11:12 by mkaraden          #+#    #+#             */
+/*   Updated: 2022/12/05 16:12:47 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 #include <fcntl.h>
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[1024];
 	char		*line;
 
 	line = NULL;
@@ -24,15 +24,15 @@ char	*get_next_line(int fd)
 	{
 		return (NULL);
 	}
-	stash = ft_init_stash(fd, stash);
-	if (!stash || ft_strlen(stash) < 1)
+	stash[fd] = ft_init_stash(fd, stash[fd]);
+	if (!stash[fd] || ft_strlen(stash[fd]) < 1)
 	{
-		free(stash);
-		stash = NULL;
-		return (stash);
+		free(stash[fd]);
+		stash[fd] = NULL;
+		return (stash[fd]);
 	}
-	line = ft_init_line(line, stash);
-	stash = ft_edit_stash(stash);
+	line = ft_init_line(line, stash[fd]);
+	stash[fd] = ft_edit_stash(stash[fd]);
 	return (line);
 }
 
