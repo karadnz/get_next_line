@@ -6,16 +6,13 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:25:17 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/05 12:23:35 by mkaraden         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:13:34 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#include <stdio.h>
-
 size_t	ft_strlen(char *str)
-//null terminate olmadan geliyor malloc yerine calloc yap
 {
 	size_t	i;
 
@@ -67,38 +64,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (rt);
 }
-/*char	*ft_strjoin(char *s1, char *s2)
-{
-	int		len;
-	char	*rt;
-	int		i;
-	int		j;
-
-	j = 0;
-	i = 0;
-	if (!s1)
-	{
-		s1 = (char *)malloc(1 * sizeof(char));
-		s1[0] = '\0';
-	}
-	if (!s2)
-		return (NULL);
-	len = ft_strlen(s1);
-	len += ft_strlen(s2);
-	rt = (char *)malloc(len + 1);
-	if (rt == NULL)
-		return (NULL);
-	while (s1[i])
-	{
-		rt[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-		rt[i++] = s2[j++];
-	rt[i] = '\0';
-	free(s1);
-	return (rt);
-}*/
 
 int	check_newline(char *ptr)
 {

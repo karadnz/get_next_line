@@ -6,13 +6,11 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:24:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/05 14:06:06 by mkaraden         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:14:36 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h>
 
 char	*get_next_line(int fd)
 {
@@ -114,27 +112,3 @@ char	*ft_edit_stash(char *stash)
 	stash = NULL;
 	return (new_stash);
 }
-/*int main()
-{
-	int fd = open("yazi.txt", O_RDONLY | O_CREAT);
-	int fd2 = open("yazi2.tx", O_RDONLY);
-	int len = 9; //line + 1
-
-	for(int i = 0; i < len; i++)
-	{
-		printf("%s$\n",get_next_line(fd));
-		//get_next_line(fd);
-	}
-
-	// printf("%s$\n",get_next_line(fd));
-	// printf("%s$\n",get_next_line(fd2));
-	// printf("%s$\n",get_next_line(fd));
-	// printf("%s$\n",get_next_line(fd));
-	
-	return(0);
-	printf("input:\n");
-	//get_next_line(0);
-	//printf("%s$\n",get_next_line(0));
-
-
-}*/

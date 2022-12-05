@@ -1,6 +1,5 @@
 {
 	"files.associations": {
-		"stdlib.h": "c",
-		"get_next_line.h": "c"
+		"get_next_line_bonus.h": "c"
 	}
 }

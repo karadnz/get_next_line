@@ -6,15 +6,12 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:25:13 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/03 17:46:59 by mkaraden         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:14:42 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-# include <stdlib.h>
-# include <unistd.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 13
