@@ -6,105 +6,96 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 11:24:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2022/12/03 14:43:25 by mkaraden         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:34:27 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-//#include "get_next_line_utils.c"
-
-
 #include <stdio.h>
 #include <fcntl.h>
 
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	char	*line;
-	line = 0;
+	char		*line;
 
-	
+	line = NULL;
+	if (BUFFER_SIZE <= 0 || fd < 0)
+	{
+		return (NULL);
+	}
 	stash = ft_init_stash(fd, stash);
-	//printf("init stash: %s$\n",stash);
-
-
-	line = ft_init_line(line,stash);
-	//printf("%s$\n",line);
-	
-
+	if (!stash)
+	{
+		free(stash);
+		stash = NULL;
+		return (NULL);
+	}
+	line = ft_init_line(line, stash);
 	stash = ft_edit_stash(stash);
-	//printf("edited stash: %s$\n",stash);
-	
-
-
-
 	return (line);
 }
 
 char	*ft_init_stash(int fd, char *stash)
 {
 	char	*buffer;
-	int rd;
+	int		rd;
 
-	rd = 1;
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-
+	if (!buffer)
+		return (NULL);
+	rd = 1;
 	while (!check_newline(stash) && rd)
 	{
-		
 		rd = read(fd, buffer, BUFFER_SIZE);
-		//ft_putstr(buffer);
+		if (rd == -1)
+		{
+			free(stash);
+			stash = NULL;
+			free(buffer);
+			return (NULL);
+		}
 		buffer[rd] = '\0';
 		stash = ft_strjoin(stash, buffer);
-		//ft_putstr(stash);
-		//printf("loop stash: %s$\n",stash);
 	}
-	
-	return(stash);
-
+	free(buffer);
+	return (stash);
 }
 
 char	*ft_init_line(char *line, char *stash)
 {
-	int i = 0;
-	while(stash[i] && stash[i] != '\n')
-	{
-		i++;
-	}
-	if(stash[i] == '\n')
-	{
-		i++;
-	}
-
-	line = malloc(sizeof(char) * (i + 1)); // \n ve \0 icin (i + 2)
+	int	i;
 
 	i = 0;
-	while(stash[i] && stash[i] != '\n')
+	if (!stash)
+	{
+		return (NULL);
+	}
+	line = malloc(sizeof(char) * (ft_strlen(stash) + 1));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
 	{
 		line[i] = stash[i];
 		i++;
 	}
-	if(stash[i] == '\n')
+	if (stash[i] == '\n')
 	{
 		line[i] = '\n';
 		i++;
 	}
-
 	line[i] = '\0';
-	return(line);
-
+	return (line);
 }
-
 
 char	*ft_edit_stash(char *stash)
 {
-	char *new_stash;
-	int stash_length;
+	char	*new_stash;
+	int		i;
 
-	stash_length = ft_strlen(stash);
-
-	int i = 0;
-	while(stash[i] && stash[i] != '\n')
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
 	{
 		i++;
 	}
@@ -112,31 +103,37 @@ char	*ft_edit_stash(char *stash)
 	{
 		i++;
 	}
-	new_stash = malloc((stash_length - i + 1) * sizeof(char));
-	
-	int j = 0;
-	while(stash[i])
+	new_stash = ft_strdup(stash + i);
+	if (!new_stash)
 	{
-		new_stash[j] = stash[i];
-		i++;
-		j++;
+		free(stash);
+		stash = NULL;
+		return (NULL);
 	}
-	new_stash[i] = '\0';
-	
-	return(new_stash);
+	free(stash);
+	stash = NULL;
+	return (new_stash);
 }
-
-
 /*int main()
 {
-
-
 	int fd = open("yazi.txt", O_RDONLY | O_CREAT);
+	int fd2 = open("yazi2.tx", O_RDONLY);
+	int len = 9; //line + 1
 
-	
+	for(int i = 0; i < len; i++)
+	{
+		printf("%s$\n",get_next_line(fd));
+	}
 
-	printf("line: %s$\n", get_next_line(fd));
-	printf("line: %s$\n", get_next_line(fd));
+	// printf("%s$\n",get_next_line(fd));
+	// printf("%s$\n",get_next_line(fd2));
+	// printf("%s$\n",get_next_line(fd));
+	// printf("%s$\n",get_next_line(fd));
 	
+	return(0);
+	printf("input:\n");
+	//get_next_line(0);
+	//printf("%s$\n",get_next_line(0));
+
 
 }*/
